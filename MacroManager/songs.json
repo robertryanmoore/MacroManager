@@ -1,0 +1,75 @@
+[
+  {
+    "song": "Anchored To You",
+    "leader": "Jonathan Munro",
+    "intro": "Full Band",
+    "set":  "Sat AM"
+  },
+  {
+    "song": "The Way",
+    "leader": "Brett Taylor",
+    "intro": "Electric Guitar",
+    "set": "Sat AM"
+  },
+  {
+    "song": "Goodness of God",
+    "leader": "Lydia Mizen",
+    "intro": "Full Band",
+    "set": "Sat AM"
+  },
+  {
+    "song": "That's Who I Praise",
+    "leader": "Jonathan Munro",
+    "intro": "Full Band",
+    "set": "Sat PM"
+  },
+  {
+    "song": "O Come To The Altar",
+    "leader": "Caitlin Hough",
+    "intro": "Full Band",
+    "set": "Sat PM"
+  },
+  {
+    "song": "God Of The Promise",
+    "leader": "Lydia Mizen",
+    "intro": "Full Band",
+    "set": "Sat PM"
+  },
+  {
+    "song": "How Far Love Goes",
+    "leader": "Ashlyn Klinkradt",
+    "intro": "Full Band",
+    "set": "Sat PM"
+  },
+  {
+    "song": "Give Me Faith",
+    "leader": "Caitlin Hough",
+    "intro": "Full Band",
+    "set": "Sat PM"
+  },
+  {
+    "song": "My Lighthouse",
+    "leader": "Brett Taylor",
+    "intro": "Full Band",
+    "set": "Sat PM"
+  },
+  {
+    "song": "Anchored To You",
+    "leader": "Jonathan Munro",
+    "intro": "Full Band",
+    "set": "Sun AM"
+
+  },
+  {
+    "song": "All Of Me",
+    "leader": "Ashlyn Klinkradt",
+    "intro": "Full Band",
+    "set": "Sun AM"
+  },
+  {
+    "song": "You Are Life",
+    "leader": "Caitlin Hough",
+    "intro": "Full Band",
+    "set": "Sun AM"
+  }
+]
