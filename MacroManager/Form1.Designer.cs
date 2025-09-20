@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             pnlSong = new Panel();
             label6 = new Label();
@@ -65,6 +66,7 @@
             btn2 = new Button();
             btn3 = new Button();
             btnRotL = new Button();
+            notifyIcon = new NotifyIcon(components);
             pnlSong.SuspendLayout();
             pnlNext.SuspendLayout();
             panel3.SuspendLayout();
@@ -457,6 +459,11 @@
             btnRotL.Text = "Vol Down";
             btnRotL.UseVisualStyleBackColor = true;
             // 
+            // notifyIcon
+            // 
+            notifyIcon.Text = "notifyIcon1";
+            notifyIcon.Visible = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
@@ -520,5 +527,6 @@
         private Button btn8;
         private Button btn7;
         private Button btn6;
+        private NotifyIcon notifyIcon;
     }
 }

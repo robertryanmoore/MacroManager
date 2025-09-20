@@ -2,6 +2,7 @@ using MacroManager;
 using System.Text.Json;
 using System.IO;
 using System.Reflection.Emit;
+using System.Windows.Forms;
 
 namespace MacroManager
 {
@@ -11,6 +12,7 @@ namespace MacroManager
         private GlobalKeyboardHook _keyboardHook = new GlobalKeyboardHook();
         private List<Song> _songs;
         private int _currentIndex = 0;
+        private ContextMenuStrip contextMenu;
 
         //virtual key codes for F14-F23, just easier to track this way
         const int F14 = 125;
@@ -31,6 +33,42 @@ namespace MacroManager
             this.Load += Form1_Load;
             this.FormClosing += Form1_FormClosing;
             _keyboardHook.KeyPressed += KeyboardHook_KeyPressed;
+
+            // Initialize NotifyIcon and ContextMenu
+            InitializeTrayComponents();
+        }
+
+        private void InitializeTrayComponents()
+        {
+            // Create the NotifyIcon
+            notifyIcon = new NotifyIcon();
+            notifyIcon.Icon = this.Icon; 
+            notifyIcon.Visible = true;
+            notifyIcon.Text = "MacroManager"; //Tooltip text
+
+            // Create the ContextMenuStrip
+            contextMenu = new ContextMenuStrip();
+            var showMenuItem = new ToolStripMenuItem("Show");
+            var exitMenuItem = new ToolStripMenuItem("Exit");
+            contextMenu.Items.Add(showMenuItem);
+            contextMenu.Items.Add(exitMenuItem);
+
+            // Assign event handlers
+            showMenuItem.Click += (sender, e) => ShowForm();
+            exitMenuItem.Click += (sender, e) => {
+                Application.Exit();
+            };
+
+            notifyIcon.ContextMenuStrip = contextMenu;
+
+            notifyIcon.DoubleClick += (sender, e) => ShowForm();
+        }
+
+        private void ShowForm()
+        {
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
+            notifyIcon.Visible = false; // Hide the tray icon
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -150,14 +188,26 @@ namespace MacroManager
 
             }
 
-
-
         }
 
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _keyboardHook.UnsetHook();
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true; // Prevents the form from actually closing
+                MinimizeToTray();
+            }
+            else
+            {
+                _keyboardHook.UnsetHook();
+            }
+        }
+
+        private void MinimizeToTray()
+        {
+            this.Hide();
+            notifyIcon.Visible = true;
         }
 
         private void KeyboardHook_KeyPressed(object sender, int vkCode)
@@ -267,13 +317,13 @@ namespace MacroManager
             switch (vkCode)
             {
                 case F14:
-                    MessageBox.Show("F14 was pressed!");
+                    //Types email address, handled by PoweToys
                     break;
                 case F15:
-                    MessageBox.Show("F15 was pressed!");
+                    //Types cell number, handled by PoweToys
                     break;
                 case F16:
-                    MessageBox.Show("F16 was pressed!");
+                    //Types ID number, handled by PoweToys
                     break;
                 case F17:
                     MessageBox.Show("F17 was pressed!");
@@ -415,7 +465,7 @@ namespace MacroManager
             Properties.Settings.Default["X32IP"] = tbxX32IP.Text;
             Properties.Settings.Default["X32PW"] = tbxPassword.Text;
             Properties.Settings.Default.Save();
-            MessageBox.Show("Settings saved successfully!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //0768514138MessageBox.Show("Settings saved successfully!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Form1_Load(this, EventArgs.Empty);
 
         }
