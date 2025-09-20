@@ -11,12 +11,23 @@ namespace MacroManager
         private GlobalKeyboardHook _keyboardHook = new GlobalKeyboardHook();
         private List<Song> _songs;
         private int _currentIndex = 0;
-        int count = 0;
 
+        //virtual key codes for F14-F23, just easier to track this way
+        const int F14 = 125;
+        const int F15 = 126;
+        const int F16 = 127;
+        const int F17 = 128;
+        const int F18 = 129;
+        const int F19 = 130;
+        const int F20 = 131;
+        const int F21 = 132;
+        const int F22 = 133;
+        const int F23 = 134;
 
         public Form1()
         {
             InitializeComponent();
+            _keyboardHook.SetHook();
             this.Load += Form1_Load;
             this.FormClosing += Form1_FormClosing;
             _keyboardHook.KeyPressed += KeyboardHook_KeyPressed;
@@ -24,8 +35,8 @@ namespace MacroManager
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            _keyboardHook.SetHook();
             cmbMode.SelectedIndex = cmbMode.Items.IndexOf(Properties.Settings.Default["Mode"].ToString());
+            //TODO: Refactor to swtich statement
             if (Properties.Settings.Default["Mode"].Equals("Camp"))
             {
                 //load songs.json
@@ -41,35 +52,104 @@ namespace MacroManager
                     MessageBox.Show("The songs.json file was not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     btnPrev.Enabled = false;
                     btnNext.Enabled = false;
+                    lblSong.Text = "Song:";
+                    lblLeader.Text = "Leader:";
+                    lblIntro.Text = "Intro:";
+                    lblSet.Text = "Set:";
+                    lblNextSong.Text = "Song:";
+                    lblNextLeader.Text = "Leader:";
+                    lblNextIntro.Text = "Intro:";
+                    lblNextSet.Text = "Set:";
                 }
                 catch (JsonException)
                 {
                     MessageBox.Show("An error occurred while parsing the JSON file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    btnPrev.Enabled = false;
+                    btnNext.Enabled = false;
+                    lblSong.Text = "Song:";
+                    lblLeader.Text = "Leader:";
+                    lblIntro.Text = "Intro:";
+                    lblSet.Text = "Set:";
+                    lblNextSong.Text = "Song:";
+                    lblNextLeader.Text = "Leader:";
+                    lblNextIntro.Text = "Intro:";
+                    lblNextSet.Text = "Set:";
                 }
+
+                //explcitly enable camp mode controls
+                pnlSong.Visible = true;
+                pnlNext.Visible = true;
+                btnPrev.Visible = true;
+                btnNext.Visible = true;
+                btnPrev.Enabled = true;
+                btnNext.Enabled = true;
+                lblX32.Visible = true;
+                tbxX32IP.Visible = true;
+                lblX32pw.Visible = true;
+                tbxPassword.Visible = true;
+
+                //disable other modes controls
+                pnlMacro.Visible = false;
             }
             else
             {
-                //disable song buttons and labels
-                btnPrev.Enabled = false;
-                btnNext.Enabled = false;
-                lblSong.Text = "Song:";
-                lblLeader.Text = "Leader:";
-                lblIntro.Text = "Intro:";
-                lblSet.Text = "Set:";
-                lblNextSong.Text = "Song:";
-                lblNextLeader.Text = "Leader:";
-                lblNextIntro.Text = "Intro:";
-                lblNextSet.Text = "Set:";
-
-            }
-
-            if (Properties.Settings.Default["Mode"].Equals("Home"))
-            {
+                //disable camp mode controls
                 pnlSong.Visible = false;
                 pnlNext.Visible = false;
                 btnPrev.Visible = false;
+                btnPrev.Enabled = false;
                 btnNext.Visible = false;
+                btnNext.Enabled = false;
+                lblX32.Visible = false;
+                tbxX32IP.Visible = false;
+                lblX32pw.Visible = false;
+                tbxPassword.Visible = false;
+
+                //enable other modes controls
+                pnlMacro.Visible = true;
+
+                if (Properties.Settings.Default["Mode"].Equals("HBC"))
+                {
+                    btn1.Text = "Smoke";
+                    btn2.Text = "Lasers";
+                    btn3.Text = "Lasers L";
+                    btn4.Text = "Lasers R";
+                    btn5.Text = "Spots";
+                    btn6.Text = "Spots 50%";
+                    btn7.Text = "Spots 25%";
+                    btn8.Text = "Previous";
+                    btn9.Text = "Next";
+                    btn10.Text = "unbound";
+                }
+                if (Properties.Settings.Default["Mode"].Equals("Sunday"))
+                {
+                    btn1.Text = "unbound";
+                    btn2.Text = "unbound";
+                    btn3.Text = "unbound";
+                    btn4.Text = "unbound";
+                    btn5.Text = "unbound";
+                    btn6.Text = "unbound";
+                    btn7.Text = "unbound";
+                    btn8.Text = "Previous";
+                    btn9.Text = "Next";
+                    btn10.Text = "unbound";
+                }
+                if (Properties.Settings.Default["Mode"].Equals("Home"))
+                {
+                    btn1.Text = "unbound";
+                    btn2.Text = "Email";
+                    btn3.Text = "Phone";
+                    btn4.Text = "ID";
+                    btn5.Text = "unbound";
+                    btn6.Text = "unbound";
+                    btn7.Text = "unbound";
+                    btn8.Text = "unbound";
+                    btn9.Text = "unbound";
+                    btn10.Text = "unbound";
+                }
+
             }
+
 
 
         }
@@ -98,7 +178,7 @@ namespace MacroManager
                     HandleHBCModeKeyPress(vkCode);
                     break;
                 default:
-                    // Handle unknown mode or do nothing
+
                     break;
             }
 
@@ -108,37 +188,37 @@ namespace MacroManager
         {
             switch (vkCode)
             {
-                case 125:
+                case F14:
                     MessageBox.Show("Mute group1, hopefully");
                     break;
-                case 126:
+                case F15:
                     MessageBox.Show("F15 Lasers!");
                     break;
-                case 127:
+                case F16:
                     MessageBox.Show("F16 Left Laser!");
                     break;
-                case 128:
+                case F17:
                     MessageBox.Show("F17 Right Laser!");
                     break;
-                case 129:
+                case F18:
                     MessageBox.Show("F18 was pressed!");
                     break;
-                case 130:
+                case F19:
                     MessageBox.Show("F19 was pressed!");
                     break;
-                case 131:
+                case F20:
                     MessageBox.Show("F20 was pressed!");
                     break;
-                case 132:
+                case F21:
                     btnPrev.Focus();
                     btnPrev.PerformClick();
                     break;
-                case 133:
+                case F22:
                     btnNext.Focus();
                     btnNext.PerformClick();
                     break;
-                case 134:
-                    MessageBox.Show("F22 was pressed!");
+                case F23:
+                    MessageBox.Show("F23 was pressed!");
                     break;
             }
         }
@@ -147,36 +227,36 @@ namespace MacroManager
         {
             switch (vkCode)
             {
-                case 125:
+                case F14:
                     MessageBox.Show("F14 was pressed!");
                     break;
-                case 126:
+                case F15:
                     MessageBox.Show("F15 was pressed!");
                     break;
-                case 127:
+                case F16:
                     MessageBox.Show("F16 was pressed!");
                     break;
-                case 128:
+                case F17:
                     MessageBox.Show("F17 was pressed!");
                     break;
-                case 129:
+                case F18:
                     MessageBox.Show("F18 was pressed!");
                     break;
-                case 130:
+                case F19:
                     MessageBox.Show("F19 was pressed!");
                     break;
-                case 131:
+                case F20:
                     MessageBox.Show("F20 was pressed!");
                     break;
-                case 132:
+                case F21:
                     //services prev
                     SendKeys.Send("{Left}");
                     break;
-                case 133:
+                case F22:
                     //services next
                     SendKeys.Send("{Right}");
                     break;
-                case 134:
+                case F23:
                     MessageBox.Show("F22 was pressed!");
                     break;
             }
@@ -186,34 +266,34 @@ namespace MacroManager
         {
             switch (vkCode)
             {
-                case 125:
+                case F14:
                     MessageBox.Show("F14 was pressed!");
                     break;
-                case 126:
+                case F15:
                     MessageBox.Show("F15 was pressed!");
                     break;
-                case 127:
+                case F16:
                     MessageBox.Show("F16 was pressed!");
                     break;
-                case 128:
+                case F17:
                     MessageBox.Show("F17 was pressed!");
                     break;
-                case 129:
+                case F18:
                     MessageBox.Show("F18 was pressed!");
                     break;
-                case 130:
+                case F19:
                     MessageBox.Show("F19 was pressed!");
                     break;
-                case 131:
+                case F20:
                     MessageBox.Show("F20 was pressed!");
                     break;
-                case 132:
+                case F21:
                     MessageBox.Show("F21 was pressed!");
                     break;
-                case 133:
+                case F22:
                     MessageBox.Show("F21 was pressed!");
                     break;
-                case 134:
+                case F23:
                     MessageBox.Show("F22 was pressed!");
                     break;
             }
@@ -223,34 +303,36 @@ namespace MacroManager
         {
             switch (vkCode)
             {
-                case 125:
+                case F14:
                     MessageBox.Show("F14 was pressed!");
                     break;
-                case 126:
+                case F15:
                     MessageBox.Show("F15 was pressed!");
                     break;
-                case 127:
+                case F16:
                     MessageBox.Show("F16 was pressed!");
                     break;
-                case 128:
+                case F17:
                     MessageBox.Show("F17 was pressed!");
                     break;
-                case 129:
+                case F18:
                     MessageBox.Show("F18 was pressed!");
                     break;
-                case 130:
+                case F19:
                     MessageBox.Show("F19 was pressed!");
                     break;
-                case 131:
+                case F20:
                     MessageBox.Show("F20 was pressed!");
                     break;
-                case 132:
-                    MessageBox.Show("F21 was pressed!");
+                case F21:
+                    //services prev
+                    SendKeys.Send("{Left}");
                     break;
-                case 133:
-                    MessageBox.Show("F21 was pressed!");
+                case F22:
+                    //services next
+                    SendKeys.Send("{Right}");
                     break;
-                case 134:
+                case F23:
                     MessageBox.Show("F22 was pressed!");
                     break;
             }
@@ -265,18 +347,15 @@ namespace MacroManager
 
             Song currentSong = _songs[_currentIndex];
 
-            // Assuming your labels are named lblSong, lblLeader, lblIntro, and lblSet
-            // Update labels in the "CURRENT" group
             lblSong.Text = $"Song: {currentSong.song}";
             lblLeader.Text = $"Leader: {currentSong.leader}";
             lblIntro.Text = $"Intro: {currentSong.intro}";
             lblSet.Text = $"Set: {currentSong.set}";
 
-            // Handle the "NEXT" song display
+            // "NEXT" song
             if (_currentIndex + 1 < _songs.Count)
             {
                 Song nextSong = _songs[_currentIndex + 1];
-                // Assuming your labels are named lblNextSong, etc.
                 lblNextSong.Text = $"Song: {nextSong.song}";
                 lblNextLeader.Text = $"Leader: {nextSong.leader}";
                 lblNextIntro.Text = $"Intro: {nextSong.intro}";
@@ -333,9 +412,62 @@ namespace MacroManager
         private void btnSaveSettings_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default["Mode"] = cmbMode.SelectedItem.ToString();
+            Properties.Settings.Default["X32IP"] = tbxX32IP.Text;
+            Properties.Settings.Default["X32PW"] = tbxPassword.Text;
             Properties.Settings.Default.Save();
             MessageBox.Show("Settings saved successfully!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            
+            Form1_Load(this, EventArgs.Empty);
+
+        }
+
+        private void btn1_Click(object sender, EventArgs e)
+        {
+            KeyboardHook_KeyPressed(this, F14);
+        }
+
+        private void btn2_Click(object sender, EventArgs e)
+        {
+            KeyboardHook_KeyPressed(this, F15);
+        }
+
+        private void btn3_Click(object sender, EventArgs e)
+        {
+            KeyboardHook_KeyPressed(this, F16);
+        }
+
+        private void btn4_Click(object sender, EventArgs e)
+        {
+            KeyboardHook_KeyPressed(this, F17);
+        }
+
+        private void btn5_Click(object sender, EventArgs e)
+        {
+            KeyboardHook_KeyPressed(this, F18);
+        }
+
+        private void btn6_Click(object sender, EventArgs e)
+        {
+            KeyboardHook_KeyPressed(this, F19);
+        }
+
+        private void btn7_Click(object sender, EventArgs e)
+        {
+            KeyboardHook_KeyPressed(this, F20);
+        }
+
+        private void btn8_Click(object sender, EventArgs e)
+        {
+            KeyboardHook_KeyPressed(this, F21);
+        }
+
+        private void btn9_Click(object sender, EventArgs e)
+        {
+            KeyboardHook_KeyPressed(this, F22);
+        }
+
+        private void btn10_Click(object sender, EventArgs e)
+        {
+            KeyboardHook_KeyPressed(this, F23);
         }
     }
 }

@@ -5,5 +5,11 @@
     <Setting Name="Mode" Type="System.String" Scope="User">
       <Value Profile="(Default)">Camp</Value>
     </Setting>
+    <Setting Name="X32IP" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="X32PW" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

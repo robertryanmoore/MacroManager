@@ -34,5 +34,29 @@ namespace MacroManager.Properties {
                 this["Mode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string X32IP {
+            get {
+                return ((string)(this["X32IP"]));
+            }
+            set {
+                this["X32IP"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string X32PW {
+            get {
+                return ((string)(this["X32PW"]));
+            }
+            set {
+                this["X32PW"] = value;
+            }
+        }
     }
 }
