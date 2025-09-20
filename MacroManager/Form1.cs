@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.IO;
 using System.Reflection.Emit;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace MacroManager
 {
@@ -25,6 +26,22 @@ namespace MacroManager
         const int F21 = 132;
         const int F22 = 133;
         const int F23 = 134;
+
+        //Play pause key code
+        [DllImport("user32.dll")]
+        public static extern void keybd_event(byte virtualKey, byte scanCode, uint flags, IntPtr extraInfo);
+        public const int KEYEVENTF_EXTENTEDKEY = 1;
+        public const int KEYEVENTF_KEYUP = 0;
+        public const int VK_MEDIA_PLAY_PAUSE = 0xB3;
+
+        public static void PressMediaPlayPause()
+        {
+            // Simulate key down
+            keybd_event(VK_MEDIA_PLAY_PAUSE, 0, KEYEVENTF_EXTENTEDKEY, IntPtr.Zero);
+
+            // Simulate key up
+            keybd_event(VK_MEDIA_PLAY_PAUSE, 0, KEYEVENTF_EXTENTEDKEY | KEYEVENTF_KEYUP, IntPtr.Zero);
+        }
 
         public Form1()
         {
@@ -174,7 +191,7 @@ namespace MacroManager
                 }
                 if (Properties.Settings.Default["Mode"].Equals("Home"))
                 {
-                    btn1.Text = "unbound";
+                    btn1.Text = "Play/Pause";
                     btn2.Text = "Email";
                     btn3.Text = "Phone";
                     btn4.Text = "ID";
@@ -317,16 +334,16 @@ namespace MacroManager
             switch (vkCode)
             {
                 case F14:
-                    //Types email address, handled by PoweToys
+                    PressMediaPlayPause();
                     break;
                 case F15:
-                    //Types cell number, handled by PoweToys
+                    SendKeys.Send("moore.robert.ryan@gmail.com");
                     break;
                 case F16:
-                    //Types ID number, handled by PoweToys
+                    SendKeys.Send("0768514138");
                     break;
                 case F17:
-                    MessageBox.Show("F17 was pressed!");
+                    SendKeys.Send("9711265125081");
                     break;
                 case F18:
                     MessageBox.Show("F18 was pressed!");
