@@ -316,6 +316,9 @@ namespace MacroManager
                     {
                         using (var udpClient = new UdpClient())
                         {
+                            // Establish the connection ONCE before the loop
+                            udpClient.Connect(IPAddress.Parse(X32_IP), X32_PORT);
+
                             // Create a local IPEndPoint for the source of the message
                             var sourceEndpoint = new IPEndPoint(IPAddress.Any, LOCAL_PORT);
 
@@ -323,27 +326,19 @@ namespace MacroManager
                             {
                                 if (channel.Value) // If the channel is checked (true), mute it
                                 {
-                                    var message = new OscMessage(sourceEndpoint, $"/ch/{channel.Key.Substring(2)}/mix/on");
-                                    message.Append(muted); // 1 = Mute, 0 = Unmute
-                                    // Send the message
-                                    udpClient.Connect(IPAddress.Parse(X32_IP), X32_PORT);
+                                    string chanNum = channel.Key.Substring(2);
+                                    if (Int32.Parse(channel.Key.Substring(2)) < 10)
+                                        chanNum = "0" + channel.Key.Substring(2);
+
+                                    var message = new OscMessage(sourceEndpoint, $"/ch/{chanNum}/mix/on");
+                                    message.Append(0); // 1 = Mute, 0 = Unmute
+
+                                    // Send the message inside the loop
                                     byte[] messageBytes = message.ToByteArray();
                                     udpClient.Send(messageBytes, messageBytes.Length);
                                 }
                             }
-
-                            //// Create the OSC message with the source endpoint and address
-                            //var message = new OscMessage(sourceEndpoint, "/ch/19/mix/on");
-                            ////var message = new OscMessage(sourceEndpoint, "/config/mute/1/on");
-                            //message.Append(1); // 1 = Mute, 0 = Unmute
-
-                            //// Send the message
-                            //udpClient.Connect(IPAddress.Parse(X32_IP), X32_PORT);
-                            //byte[] messageBytes = message.ToByteArray();
-                            //udpClient.Send(messageBytes, messageBytes.Length);
                         }
-
-                        //MessageBox.Show("Mute Group 1 muted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
