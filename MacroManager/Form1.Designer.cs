@@ -67,6 +67,7 @@
             btn3 = new Button();
             btnRotL = new Button();
             notifyIcon = new NotifyIcon(components);
+            btnMuteChans = new Button();
             pnlSong.SuspendLayout();
             pnlNext.SuspendLayout();
             panel3.SuspendLayout();
@@ -233,6 +234,7 @@
             // panel3
             // 
             panel3.BorderStyle = BorderStyle.FixedSingle;
+            panel3.Controls.Add(btnMuteChans);
             panel3.Controls.Add(tbxPassword);
             panel3.Controls.Add(lblX32pw);
             panel3.Controls.Add(tbxX32IP);
@@ -464,6 +466,16 @@
             notifyIcon.Text = "notifyIcon1";
             notifyIcon.Visible = true;
             // 
+            // btnMuteChans
+            // 
+            btnMuteChans.Location = new Point(14, 276);
+            btnMuteChans.Name = "btnMuteChans";
+            btnMuteChans.Size = new Size(271, 49);
+            btnMuteChans.TabIndex = 8;
+            btnMuteChans.Text = "Setuo Mute Group";
+            btnMuteChans.UseVisualStyleBackColor = true;
+            btnMuteChans.Click += btnMuteChans_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
@@ -528,5 +540,6 @@
         private Button btn7;
         private Button btn6;
         private NotifyIcon notifyIcon;
+        private Button btnMuteChans;
     }
 }

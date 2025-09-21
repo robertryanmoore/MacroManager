@@ -18,11 +18,15 @@ namespace MacroManager
         private List<Song> _songs;
         private int _currentIndex = 0;
         private ContextMenuStrip contextMenu;
+        private bool muted = true;
 
         //X32 stuffs
-        private const string X32_IP = "192.168.1.2"; // Replace with your X32's IP
+        //private const string X32_IP = "192.168.1.2"; // Replace with your X32's IP
         private const int X32_PORT = 10023; // Standard OSC port for X32
         private const int LOCAL_PORT = 9001; // A local port for your app
+
+        private Dictionary<string, bool> _channelStates = new Dictionary<string, bool>();
+        private string _filePath;
 
         //virtual key codes for F14-F23, just easier to track this way
         const int F14 = 125;
@@ -62,13 +66,15 @@ namespace MacroManager
 
             // Initialize NotifyIcon and ContextMenu
             InitializeTrayComponents();
+            _filePath = Path.Combine(Application.UserAppDataPath, "channel_states.json");
+            _channelStates = LoadChannelStates();
         }
 
         private void InitializeTrayComponents()
         {
             // Create the NotifyIcon
             notifyIcon = new NotifyIcon();
-            notifyIcon.Icon = this.Icon; 
+            notifyIcon.Icon = this.Icon;
             notifyIcon.Visible = true;
             notifyIcon.Text = "MacroManager"; //Tooltip text
 
@@ -81,13 +87,46 @@ namespace MacroManager
 
             // Assign event handlers
             showMenuItem.Click += (sender, e) => ShowForm();
-            exitMenuItem.Click += (sender, e) => {
+            exitMenuItem.Click += (sender, e) =>
+            {
                 Application.Exit();
             };
 
             notifyIcon.ContextMenuStrip = contextMenu;
 
             notifyIcon.DoubleClick += (sender, e) => ShowForm();
+        }
+
+        private void SaveChannelStates(Dictionary<string, bool> states)
+        {
+            try
+            {
+                string jsonString = JsonSerializer.Serialize(states);
+                Directory.CreateDirectory(Application.UserAppDataPath); // Ensures the directory exists
+                File.WriteAllText(_filePath, jsonString);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error saving channel states: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private Dictionary<string, bool> LoadChannelStates()
+        {
+            if (File.Exists(_filePath))
+            {
+                try
+                {
+                    string jsonString = File.ReadAllText(_filePath);
+                    return JsonSerializer.Deserialize<Dictionary<string, bool>>(jsonString);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error loading channel states: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            // If the file doesn't exist or an error occurred, return a new dictionary
+            return new Dictionary<string, bool>();
         }
 
         private void ShowForm()
@@ -151,6 +190,8 @@ namespace MacroManager
                 tbxX32IP.Visible = true;
                 lblX32pw.Visible = true;
                 tbxPassword.Visible = true;
+                btnMuteChans.Visible = true;
+                btnMuteChans.Enabled = true;
 
                 //disable other modes controls
                 pnlMacro.Visible = false;
@@ -168,6 +209,8 @@ namespace MacroManager
                 tbxX32IP.Visible = false;
                 lblX32pw.Visible = false;
                 tbxPassword.Visible = false;
+                btnMuteChans.Visible = false;
+                btnMuteChans.Enabled = false;
 
                 //enable other modes controls
                 pnlMacro.Visible = true;
@@ -266,6 +309,8 @@ namespace MacroManager
             {
                 case F14:
                     //MessageBox.Show("Mute group1, hopefully");
+                    string X32_IP = Properties.Settings.Default["X32IP"].ToString();
+                    muted = !muted;
 
                     try
                     {
@@ -274,25 +319,38 @@ namespace MacroManager
                             // Create a local IPEndPoint for the source of the message
                             var sourceEndpoint = new IPEndPoint(IPAddress.Any, LOCAL_PORT);
 
-                            // Create the OSC message with the source endpoint and address
-                            var message = new OscMessage(sourceEndpoint, "/ch/19/mix/on");
-                            //var message = new OscMessage(sourceEndpoint, "/config/mute/1/on");
-                            message.Append(1); // 1 = Mute, 0 = Unmute
+                            foreach (var channel in _channelStates)
+                            {
+                                if (channel.Value) // If the channel is checked (true), mute it
+                                {
+                                    var message = new OscMessage(sourceEndpoint, $"/ch/{channel.Key.Substring(2)}/mix/on");
+                                    message.Append(muted); // 1 = Mute, 0 = Unmute
+                                    // Send the message
+                                    udpClient.Connect(IPAddress.Parse(X32_IP), X32_PORT);
+                                    byte[] messageBytes = message.ToByteArray();
+                                    udpClient.Send(messageBytes, messageBytes.Length);
+                                }
+                            }
 
-                            // Send the message
-                            udpClient.Connect(IPAddress.Parse(X32_IP), X32_PORT);
-                            byte[] messageBytes = message.ToByteArray();
-                            udpClient.Send(messageBytes, messageBytes.Length);
+                            //// Create the OSC message with the source endpoint and address
+                            //var message = new OscMessage(sourceEndpoint, "/ch/19/mix/on");
+                            ////var message = new OscMessage(sourceEndpoint, "/config/mute/1/on");
+                            //message.Append(1); // 1 = Mute, 0 = Unmute
+
+                            //// Send the message
+                            //udpClient.Connect(IPAddress.Parse(X32_IP), X32_PORT);
+                            //byte[] messageBytes = message.ToByteArray();
+                            //udpClient.Send(messageBytes, messageBytes.Length);
                         }
 
-                        MessageBox.Show("Mute Group 1 muted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //MessageBox.Show("Mute Group 1 muted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show($"Error sending OSC message: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
-            break;
+                    break;
                 case F15:
                     MessageBox.Show("F15 Lasers!");
                     break;
@@ -570,6 +628,17 @@ namespace MacroManager
         private void btn10_Click(object sender, EventArgs e)
         {
             KeyboardHook_KeyPressed(this, F23);
+        }
+
+        private void btnMuteChans_Click(object sender, EventArgs e)
+        {
+            ChanPopUp chanPopUp = new ChanPopUp(_channelStates);
+            if (chanPopUp.ShowDialog() == DialogResult.OK)
+            {
+                // When the dialog closes, retrieve the updated states
+                _channelStates = chanPopUp.ChannelStates;
+                SaveChannelStates(_channelStates); // Save the updated states to the file
+            }
         }
     }
 }
