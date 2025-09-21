@@ -4,6 +4,10 @@ using System.IO;
 using System.Reflection.Emit;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using Bespoke.Osc;
+using System.Net.Sockets;
+using System.Net;
+
 
 namespace MacroManager
 {
@@ -14,6 +18,11 @@ namespace MacroManager
         private List<Song> _songs;
         private int _currentIndex = 0;
         private ContextMenuStrip contextMenu;
+
+        //X32 stuffs
+        private const string X32_IP = "192.168.1.2"; // Replace with your X32's IP
+        private const int X32_PORT = 10023; // Standard OSC port for X32
+        private const int LOCAL_PORT = 9001; // A local port for your app
 
         //virtual key codes for F14-F23, just easier to track this way
         const int F14 = 125;
@@ -256,8 +265,34 @@ namespace MacroManager
             switch (vkCode)
             {
                 case F14:
-                    MessageBox.Show("Mute group1, hopefully");
-                    break;
+                    //MessageBox.Show("Mute group1, hopefully");
+
+                    try
+                    {
+                        using (var udpClient = new UdpClient())
+                        {
+                            // Create a local IPEndPoint for the source of the message
+                            var sourceEndpoint = new IPEndPoint(IPAddress.Any, LOCAL_PORT);
+
+                            // Create the OSC message with the source endpoint and address
+                            var message = new OscMessage(sourceEndpoint, "/ch/19/mix/on");
+                            //var message = new OscMessage(sourceEndpoint, "/config/mute/1/on");
+                            message.Append(1); // 1 = Mute, 0 = Unmute
+
+                            // Send the message
+                            udpClient.Connect(IPAddress.Parse(X32_IP), X32_PORT);
+                            byte[] messageBytes = message.ToByteArray();
+                            udpClient.Send(messageBytes, messageBytes.Length);
+                        }
+
+                        MessageBox.Show("Mute Group 1 muted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error sending OSC message: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+            break;
                 case F15:
                     MessageBox.Show("F15 Lasers!");
                     break;
