@@ -45,8 +45,7 @@
             pnlNext = new Panel();
             label7 = new Label();
             panel3 = new Panel();
-            tbxPassword = new TextBox();
-            lblX32pw = new Label();
+            btnMuteChans = new Button();
             tbxX32IP = new TextBox();
             lblX32 = new Label();
             btnSaveSettings = new Button();
@@ -67,7 +66,6 @@
             btn3 = new Button();
             btnRotL = new Button();
             notifyIcon = new NotifyIcon(components);
-            btnMuteChans = new Button();
             pnlSong.SuspendLayout();
             pnlNext.SuspendLayout();
             panel3.SuspendLayout();
@@ -95,7 +93,7 @@
             label6.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label6.Location = new Point(6, 15);
             label6.Name = "label6";
-            label6.Size = new Size(126, 34);
+            label6.Size = new Size(105, 30);
             label6.TabIndex = 4;
             label6.Text = "CURRENT";
             // 
@@ -104,7 +102,7 @@
             lblSet.AutoSize = true;
             lblSet.Location = new Point(31, 143);
             lblSet.Name = "lblSet";
-            lblSet.Size = new Size(53, 32);
+            lblSet.Size = new Size(44, 28);
             lblSet.TabIndex = 3;
             lblSet.Text = "Set:";
             // 
@@ -115,7 +113,7 @@
             lblIntro.Location = new Point(31, 111);
             lblIntro.Margin = new Padding(4, 0, 4, 0);
             lblIntro.Name = "lblIntro";
-            lblIntro.Size = new Size(76, 32);
+            lblIntro.Size = new Size(63, 28);
             lblIntro.TabIndex = 2;
             lblIntro.Text = "Intro: ";
             // 
@@ -126,7 +124,7 @@
             lblLeader.Location = new Point(31, 79);
             lblLeader.Margin = new Padding(4, 0, 4, 0);
             lblLeader.Name = "lblLeader";
-            lblLeader.Size = new Size(90, 32);
+            lblLeader.Size = new Size(74, 28);
             lblLeader.TabIndex = 1;
             lblLeader.Text = "Leader:";
             // 
@@ -137,7 +135,7 @@
             lblSong.Location = new Point(31, 47);
             lblSong.Margin = new Padding(4, 0, 4, 0);
             lblSong.Name = "lblSong";
-            lblSong.Size = new Size(81, 32);
+            lblSong.Size = new Size(67, 28);
             lblSong.TabIndex = 0;
             lblSong.Text = "Song: ";
             // 
@@ -170,7 +168,7 @@
             lblNextSong.Location = new Point(31, 47);
             lblNextSong.Margin = new Padding(4, 0, 4, 0);
             lblNextSong.Name = "lblNextSong";
-            lblNextSong.Size = new Size(81, 32);
+            lblNextSong.Size = new Size(67, 28);
             lblNextSong.TabIndex = 0;
             lblNextSong.Text = "Song: ";
             // 
@@ -181,7 +179,7 @@
             lblNextLeader.Location = new Point(31, 79);
             lblNextLeader.Margin = new Padding(4, 0, 4, 0);
             lblNextLeader.Name = "lblNextLeader";
-            lblNextLeader.Size = new Size(90, 32);
+            lblNextLeader.Size = new Size(74, 28);
             lblNextLeader.TabIndex = 1;
             lblNextLeader.Text = "Leader:";
             // 
@@ -192,7 +190,7 @@
             lblNextIntro.Location = new Point(31, 111);
             lblNextIntro.Margin = new Padding(4, 0, 4, 0);
             lblNextIntro.Name = "lblNextIntro";
-            lblNextIntro.Size = new Size(76, 32);
+            lblNextIntro.Size = new Size(63, 28);
             lblNextIntro.TabIndex = 2;
             lblNextIntro.Text = "Intro: ";
             // 
@@ -201,7 +199,7 @@
             lblNextSet.AutoSize = true;
             lblNextSet.Location = new Point(31, 143);
             lblNextSet.Name = "lblNextSet";
-            lblNextSet.Size = new Size(53, 32);
+            lblNextSet.Size = new Size(44, 28);
             lblNextSet.TabIndex = 3;
             lblNextSet.Text = "Set:";
             // 
@@ -227,7 +225,7 @@
             label7.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label7.Location = new Point(6, 13);
             label7.Name = "label7";
-            label7.Size = new Size(78, 34);
+            label7.Size = new Size(66, 30);
             label7.TabIndex = 5;
             label7.Text = "NEXT";
             // 
@@ -235,8 +233,6 @@
             // 
             panel3.BorderStyle = BorderStyle.FixedSingle;
             panel3.Controls.Add(btnMuteChans);
-            panel3.Controls.Add(tbxPassword);
-            panel3.Controls.Add(lblX32pw);
             panel3.Controls.Add(tbxX32IP);
             panel3.Controls.Add(lblX32);
             panel3.Controls.Add(btnSaveSettings);
@@ -248,28 +244,21 @@
             panel3.Size = new Size(300, 402);
             panel3.TabIndex = 5;
             // 
-            // tbxPassword
+            // btnMuteChans
             // 
-            tbxPassword.Location = new Point(128, 173);
-            tbxPassword.Name = "tbxPassword";
-            tbxPassword.PasswordChar = '*';
-            tbxPassword.Size = new Size(157, 39);
-            tbxPassword.TabIndex = 7;
-            // 
-            // lblX32pw
-            // 
-            lblX32pw.AutoSize = true;
-            lblX32pw.Location = new Point(14, 173);
-            lblX32pw.Name = "lblX32pw";
-            lblX32pw.Size = new Size(96, 32);
-            lblX32pw.TabIndex = 6;
-            lblX32pw.Text = "X32 PW";
+            btnMuteChans.Location = new Point(14, 276);
+            btnMuteChans.Name = "btnMuteChans";
+            btnMuteChans.Size = new Size(271, 49);
+            btnMuteChans.TabIndex = 8;
+            btnMuteChans.Text = "Setup Mute Group";
+            btnMuteChans.UseVisualStyleBackColor = true;
+            btnMuteChans.Click += btnMuteChans_Click;
             // 
             // tbxX32IP
             // 
             tbxX32IP.Location = new Point(128, 124);
             tbxX32IP.Name = "tbxX32IP";
-            tbxX32IP.Size = new Size(157, 39);
+            tbxX32IP.Size = new Size(157, 34);
             tbxX32IP.TabIndex = 5;
             // 
             // lblX32
@@ -277,7 +266,7 @@
             lblX32.AutoSize = true;
             lblX32.Location = new Point(14, 127);
             lblX32.Name = "lblX32";
-            lblX32.Size = new Size(80, 32);
+            lblX32.Size = new Size(67, 28);
             lblX32.TabIndex = 4;
             lblX32.Text = "X32 IP";
             // 
@@ -296,7 +285,7 @@
             lblMode.AutoSize = true;
             lblMode.Location = new Point(14, 79);
             lblMode.Name = "lblMode";
-            lblMode.Size = new Size(83, 32);
+            lblMode.Size = new Size(69, 28);
             lblMode.TabIndex = 2;
             lblMode.Text = "MODE";
             // 
@@ -306,7 +295,7 @@
             lblSettings.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblSettings.Location = new Point(76, 15);
             lblSettings.Name = "lblSettings";
-            lblSettings.Size = new Size(125, 32);
+            lblSettings.Size = new Size(105, 28);
             lblSettings.TabIndex = 1;
             lblSettings.Text = "SETTINGS";
             lblSettings.TextAlign = ContentAlignment.MiddleCenter;
@@ -319,7 +308,7 @@
             cmbMode.Items.AddRange(new object[] { "Camp", "HBC", "Home", "Sunday" });
             cmbMode.Location = new Point(103, 71);
             cmbMode.Name = "cmbMode";
-            cmbMode.Size = new Size(182, 40);
+            cmbMode.Size = new Size(182, 36);
             cmbMode.Sorted = true;
             cmbMode.TabIndex = 0;
             cmbMode.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
@@ -466,19 +455,9 @@
             notifyIcon.Text = "notifyIcon1";
             notifyIcon.Visible = true;
             // 
-            // btnMuteChans
-            // 
-            btnMuteChans.Location = new Point(14, 276);
-            btnMuteChans.Name = "btnMuteChans";
-            btnMuteChans.Size = new Size(271, 49);
-            btnMuteChans.TabIndex = 8;
-            btnMuteChans.Text = "Setuo Mute Group";
-            btnMuteChans.UseVisualStyleBackColor = true;
-            btnMuteChans.Click += btnMuteChans_Click;
-            // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(13F, 32F);
+            AutoScaleDimensions = new SizeF(11F, 28F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(990, 469);
             Controls.Add(pnlMacro);

@@ -18,7 +18,7 @@ namespace MacroManager
         private List<Song> _songs;
         private int _currentIndex = 0;
         private ContextMenuStrip contextMenu;
-        private bool muted = true;
+        private bool muted = false; //gets flipped at button press
 
         //X32 stuffs
         //private const string X32_IP = "192.168.1.2"; // Replace with your X32's IP
@@ -188,10 +188,9 @@ namespace MacroManager
                 btnNext.Enabled = true;
                 lblX32.Visible = true;
                 tbxX32IP.Visible = true;
-                lblX32pw.Visible = true;
-                tbxPassword.Visible = true;
                 btnMuteChans.Visible = true;
                 btnMuteChans.Enabled = true;
+                tbxX32IP.Text = Properties.Settings.Default["X32IP"].ToString();
 
                 //disable other modes controls
                 pnlMacro.Visible = false;
@@ -316,34 +315,25 @@ namespace MacroManager
                     {
                         using (var udpClient = new UdpClient())
                         {
-                            // Create a local IPEndPoint for the source of the message
+                            udpClient.Connect(IPAddress.Parse(X32_IP), X32_PORT);
                             var sourceEndpoint = new IPEndPoint(IPAddress.Any, LOCAL_PORT);
 
                             foreach (var channel in _channelStates)
                             {
-                                if (channel.Value) // If the channel is checked (true), mute it
+                                if (channel.Value)
                                 {
-                                    var message = new OscMessage(sourceEndpoint, $"/ch/{channel.Key.Substring(2)}/mix/on");
-                                    message.Append(muted); // 1 = Mute, 0 = Unmute
-                                    // Send the message
-                                    udpClient.Connect(IPAddress.Parse(X32_IP), X32_PORT);
+                                    string chanNum = channel.Key.Substring(2).PadLeft(2, '0');
+                                    var message = new OscMessage(sourceEndpoint, $"/ch/{chanNum}/mix/on");
+
+                                    message.Append(muted ? 0 : 1);
+
                                     byte[] messageBytes = message.ToByteArray();
                                     udpClient.Send(messageBytes, messageBytes.Length);
+
+                                    Thread.Sleep(10); // prevent X32 from dropping
                                 }
                             }
-
-                            //// Create the OSC message with the source endpoint and address
-                            //var message = new OscMessage(sourceEndpoint, "/ch/19/mix/on");
-                            ////var message = new OscMessage(sourceEndpoint, "/config/mute/1/on");
-                            //message.Append(1); // 1 = Mute, 0 = Unmute
-
-                            //// Send the message
-                            //udpClient.Connect(IPAddress.Parse(X32_IP), X32_PORT);
-                            //byte[] messageBytes = message.ToByteArray();
-                            //udpClient.Send(messageBytes, messageBytes.Length);
                         }
-
-                        //MessageBox.Show("Mute Group 1 muted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
