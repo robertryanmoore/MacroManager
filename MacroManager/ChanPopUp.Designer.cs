@@ -34,18 +34,21 @@
             // 
             // checkedListBox1
             // 
+            checkedListBox1.CheckOnClick = true;
             checkedListBox1.FormattingEnabled = true;
-            checkedListBox1.Location = new Point(12, 18);
+            checkedListBox1.Location = new Point(10, 14);
+            checkedListBox1.Margin = new Padding(2, 2, 2, 2);
             checkedListBox1.Name = "checkedListBox1";
-            checkedListBox1.Size = new Size(339, 368);
+            checkedListBox1.Size = new Size(272, 290);
             checkedListBox1.TabIndex = 0;
             checkedListBox1.SelectedIndexChanged += checkedListBox1_SelectedIndexChanged;
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(12, 404);
+            btnSave.Location = new Point(10, 323);
+            btnSave.Margin = new Padding(2, 2, 2, 2);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(339, 34);
+            btnSave.Size = new Size(271, 27);
             btnSave.TabIndex = 1;
             btnSave.Text = "SAVE";
             btnSave.UseVisualStyleBackColor = true;
@@ -53,11 +56,12 @@
             // 
             // ChanPopUp
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(363, 450);
+            ClientSize = new Size(290, 360);
             Controls.Add(btnSave);
             Controls.Add(checkedListBox1);
+            Margin = new Padding(2, 2, 2, 2);
             Name = "ChanPopUp";
             Text = "ChanPopUp";
             ResumeLayout(false);
