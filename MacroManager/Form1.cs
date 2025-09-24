@@ -573,9 +573,7 @@ namespace MacroManager
         {
             Properties.Settings.Default["Mode"] = cmbMode.SelectedItem.ToString();
             Properties.Settings.Default["X32IP"] = tbxX32IP.Text;
-            Properties.Settings.Default["X32PW"] = tbxPassword.Text;
             Properties.Settings.Default.Save();
-            //0768514138MessageBox.Show("Settings saved successfully!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Form1_Load(this, EventArgs.Empty);
 
         }
