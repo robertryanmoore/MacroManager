@@ -19,6 +19,9 @@ namespace MacroManager
         private int _currentIndex = 0;
         private ContextMenuStrip contextMenu;
         private bool muted = false; //gets flipped at button press
+        private static readonly HttpClient _httpClient = new HttpClient();
+
+
 
         //X32 stuffs
         //private const string X32_IP = "192.168.1.2"; // Replace with your X32's IP
@@ -129,6 +132,23 @@ namespace MacroManager
             return new Dictionary<string, bool>();
         }
 
+        public static void FireAndForgetGet(string url)
+        {
+            try
+            {
+                // Call the asynchronous method and immediately block the current thread
+                // with .Result. This is generally discouraged in UI apps but is the 
+                // simplest way to make it synchronous.
+                var response = _httpClient.GetAsync(url).Result;
+                // Response is ignored.
+            }
+            catch (Exception ex)
+            {
+                // Catch and handle/ignore any network exceptions (e.g., connection timeout)
+                System.Diagnostics.Debug.WriteLine($"Blocking GET failed for {url}: {ex.Message}");
+            }
+        }
+
         private void ShowForm()
         {
             this.Show();
@@ -206,8 +226,6 @@ namespace MacroManager
                 btnNext.Enabled = false;
                 lblX32.Visible = false;
                 tbxX32IP.Visible = false;
-                lblX32pw.Visible = false;
-                tbxPassword.Visible = false;
                 btnMuteChans.Visible = false;
                 btnMuteChans.Enabled = false;
 
@@ -342,13 +360,18 @@ namespace MacroManager
 
                     break;
                 case F15:
-                    MessageBox.Show("F15 Lasers!");
+                    //MessageBox.Show("F15 Lasers!");
+                    //make the url configurable later
+                    FireAndForgetGet("http://laserleft.local/toggle");
+                    FireAndForgetGet("http://laserright.local/toggle");
                     break;
                 case F16:
-                    MessageBox.Show("F16 Left Laser!");
+                    //MessageBox.Show("F16 Left Laser!");
+                    FireAndForgetGet("http://laserleft.local/toggle");
                     break;
                 case F17:
-                    MessageBox.Show("F17 Right Laser!");
+                    //MessageBox.Show("F17 Right Laser!");
+                    FireAndForgetGet("http://laserright.local/toggle");
                     break;
                 case F18:
                     MessageBox.Show("F18 was pressed!");
