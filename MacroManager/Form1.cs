@@ -140,6 +140,7 @@ namespace MacroManager
                 // with .Result. This is generally discouraged in UI apps but is the 
                 // simplest way to make it synchronous.
                 var response = _httpClient.GetAsync(url).Result;
+                Thread.Sleep(10); // prevent X32 from dropping
                 // Response is ignored.
             }
             catch (Exception ex)
