@@ -262,11 +262,11 @@ namespace MacroManager
                 if (Properties.Settings.Default["Mode"].Equals("Home"))
                 {
                     btn1.Text = "Play/Pause";
-                    btn2.Text = "Email";
-                    btn3.Text = "Phone";
+                    btn2.Text = "Email P";
+                    btn3.Text = "Phone P";
                     btn4.Text = "ID";
-                    btn5.Text = "unbound";
-                    btn6.Text = "unbound";
+                    btn5.Text = "Email W";
+                    btn6.Text = "Phone W";
                     btn7.Text = "unbound";
                     btn8.Text = "unbound";
                     btn9.Text = "unbound";
@@ -453,10 +453,10 @@ namespace MacroManager
                     SendKeys.Send("9711265125081");
                     break;
                 case F18:
-                    MessageBox.Show("F18 was pressed!");
+                    SendKeys.Send("robert@robertryanmoore.co.za");
                     break;
                 case F19:
-                    MessageBox.Show("F19 was pressed!");
+                    SendKeys.Send("0691892576");
                     break;
                 case F20:
                     MessageBox.Show("F20 was pressed!");
