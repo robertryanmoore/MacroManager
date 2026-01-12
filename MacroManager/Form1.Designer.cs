@@ -93,7 +93,7 @@
             label6.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label6.Location = new Point(6, 15);
             label6.Name = "label6";
-            label6.Size = new Size(105, 30);
+            label6.Size = new Size(85, 23);
             label6.TabIndex = 4;
             label6.Text = "CURRENT";
             // 
@@ -102,7 +102,7 @@
             lblSet.AutoSize = true;
             lblSet.Location = new Point(31, 143);
             lblSet.Name = "lblSet";
-            lblSet.Size = new Size(44, 28);
+            lblSet.Size = new Size(35, 21);
             lblSet.TabIndex = 3;
             lblSet.Text = "Set:";
             // 
@@ -113,7 +113,7 @@
             lblIntro.Location = new Point(31, 111);
             lblIntro.Margin = new Padding(4, 0, 4, 0);
             lblIntro.Name = "lblIntro";
-            lblIntro.Size = new Size(63, 28);
+            lblIntro.Size = new Size(50, 21);
             lblIntro.TabIndex = 2;
             lblIntro.Text = "Intro: ";
             // 
@@ -124,7 +124,7 @@
             lblLeader.Location = new Point(31, 79);
             lblLeader.Margin = new Padding(4, 0, 4, 0);
             lblLeader.Name = "lblLeader";
-            lblLeader.Size = new Size(74, 28);
+            lblLeader.Size = new Size(60, 21);
             lblLeader.TabIndex = 1;
             lblLeader.Text = "Leader:";
             // 
@@ -135,7 +135,7 @@
             lblSong.Location = new Point(31, 47);
             lblSong.Margin = new Padding(4, 0, 4, 0);
             lblSong.Name = "lblSong";
-            lblSong.Size = new Size(67, 28);
+            lblSong.Size = new Size(53, 21);
             lblSong.TabIndex = 0;
             lblSong.Text = "Song: ";
             // 
@@ -168,7 +168,7 @@
             lblNextSong.Location = new Point(31, 47);
             lblNextSong.Margin = new Padding(4, 0, 4, 0);
             lblNextSong.Name = "lblNextSong";
-            lblNextSong.Size = new Size(67, 28);
+            lblNextSong.Size = new Size(53, 21);
             lblNextSong.TabIndex = 0;
             lblNextSong.Text = "Song: ";
             // 
@@ -179,7 +179,7 @@
             lblNextLeader.Location = new Point(31, 79);
             lblNextLeader.Margin = new Padding(4, 0, 4, 0);
             lblNextLeader.Name = "lblNextLeader";
-            lblNextLeader.Size = new Size(74, 28);
+            lblNextLeader.Size = new Size(60, 21);
             lblNextLeader.TabIndex = 1;
             lblNextLeader.Text = "Leader:";
             // 
@@ -190,7 +190,7 @@
             lblNextIntro.Location = new Point(31, 111);
             lblNextIntro.Margin = new Padding(4, 0, 4, 0);
             lblNextIntro.Name = "lblNextIntro";
-            lblNextIntro.Size = new Size(63, 28);
+            lblNextIntro.Size = new Size(50, 21);
             lblNextIntro.TabIndex = 2;
             lblNextIntro.Text = "Intro: ";
             // 
@@ -199,7 +199,7 @@
             lblNextSet.AutoSize = true;
             lblNextSet.Location = new Point(31, 143);
             lblNextSet.Name = "lblNextSet";
-            lblNextSet.Size = new Size(44, 28);
+            lblNextSet.Size = new Size(35, 21);
             lblNextSet.TabIndex = 3;
             lblNextSet.Text = "Set:";
             // 
@@ -225,7 +225,7 @@
             label7.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label7.Location = new Point(6, 13);
             label7.Name = "label7";
-            label7.Size = new Size(66, 30);
+            label7.Size = new Size(53, 23);
             label7.TabIndex = 5;
             label7.Text = "NEXT";
             // 
@@ -258,7 +258,7 @@
             // 
             tbxX32IP.Location = new Point(128, 124);
             tbxX32IP.Name = "tbxX32IP";
-            tbxX32IP.Size = new Size(157, 34);
+            tbxX32IP.Size = new Size(157, 29);
             tbxX32IP.TabIndex = 5;
             // 
             // lblX32
@@ -266,7 +266,7 @@
             lblX32.AutoSize = true;
             lblX32.Location = new Point(14, 127);
             lblX32.Name = "lblX32";
-            lblX32.Size = new Size(67, 28);
+            lblX32.Size = new Size(54, 21);
             lblX32.TabIndex = 4;
             lblX32.Text = "X32 IP";
             // 
@@ -285,7 +285,7 @@
             lblMode.AutoSize = true;
             lblMode.Location = new Point(14, 79);
             lblMode.Name = "lblMode";
-            lblMode.Size = new Size(69, 28);
+            lblMode.Size = new Size(55, 21);
             lblMode.TabIndex = 2;
             lblMode.Text = "MODE";
             // 
@@ -295,7 +295,7 @@
             lblSettings.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblSettings.Location = new Point(76, 15);
             lblSettings.Name = "lblSettings";
-            lblSettings.Size = new Size(105, 28);
+            lblSettings.Size = new Size(84, 21);
             lblSettings.TabIndex = 1;
             lblSettings.Text = "SETTINGS";
             lblSettings.TextAlign = ContentAlignment.MiddleCenter;
@@ -305,10 +305,10 @@
             cmbMode.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbMode.FlatStyle = FlatStyle.System;
             cmbMode.FormattingEnabled = true;
-            cmbMode.Items.AddRange(new object[] { "Camp", "HBC", "Home", "Sunday" });
+            cmbMode.Items.AddRange(new object[] { "Camp", "HBC", "Home", "Sunday", "Work" });
             cmbMode.Location = new Point(103, 71);
             cmbMode.Name = "cmbMode";
-            cmbMode.Size = new Size(182, 36);
+            cmbMode.Size = new Size(182, 29);
             cmbMode.Sorted = true;
             cmbMode.TabIndex = 0;
             cmbMode.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
@@ -457,7 +457,7 @@
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(11F, 28F);
+            AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(990, 469);
             Controls.Add(pnlMacro);
