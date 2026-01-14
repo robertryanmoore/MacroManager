@@ -272,6 +272,19 @@ namespace MacroManager
                     btn9.Text = "unbound";
                     btn10.Text = "unbound";
                 }
+                if (Properties.Settings.Default["Mode"].Equals("Work"))
+                {
+                    btn1.Text = "Play/Pause";
+                    btn2.Text = "Email P";
+                    btn3.Text = "Phone P";
+                    btn4.Text = "ID";
+                    btn5.Text = "Email W";
+                    btn6.Text = "Phone W";
+                    btn7.Text = "Open 11Share";
+                    btn8.Text = "Beta/redesign";
+                    btn9.Text = "unbound";
+                    btn10.Text = "unbound";
+                }
 
             }
 
@@ -313,6 +326,9 @@ namespace MacroManager
                     break;
                 case "HBC":
                     HandleHBCModeKeyPress(vkCode);
+                    break;
+                case "Work":
+                    HandleWorkModeKeyPress(vkCode);
                     break;
                 default:
 
@@ -505,6 +521,50 @@ namespace MacroManager
                 case F22:
                     //services next
                     SendKeys.Send("{Right}");
+                    break;
+                case F23:
+                    MessageBox.Show("F22 was pressed!");
+                    break;
+            }
+        }
+
+        private void HandleWorkModeKeyPress(int vkCode)
+        {
+            switch (vkCode)
+            {
+                case F14:
+                    PressMediaPlayPause();
+                    break;
+                case F15:
+                    SendKeys.Send("moore.robert.ryan@gmail.com");
+                    break;
+                case F16:
+                    SendKeys.Send("0768514138");
+                    break;
+                case F17:
+                    SendKeys.Send("9711265125081");
+                    break;
+                case F18:
+                    SendKeys.Send("robertmoore@winems.co.za");
+                    break;
+                case F19:
+                    SendKeys.Send("0691892576");
+                    break;
+                case F20:
+                   
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+                    {
+                        FileName = "\\\\10.170.15.6\\XNeelo Backup\\",
+                        UseShellExecute = true,
+                        Verb = "open"
+                    });
+
+                    break;
+                case F21:
+                    SendKeys.Send("git checkout beta/redesign {Enter}");
+                    break;
+                case F22:
+                    MessageBox.Show("F21 was pressed!");
                     break;
                 case F23:
                     MessageBox.Show("F22 was pressed!");
