@@ -8,10 +8,22 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Configurations>Debug;Release;Tablet</Configurations>
     <Platforms>AnyCPU;x86</Platforms>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <Version>1.0.0</Version>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Bespoke.Osc" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="songs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

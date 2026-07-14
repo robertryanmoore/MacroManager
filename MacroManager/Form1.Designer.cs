@@ -46,6 +46,7 @@
             label7 = new Label();
             panel3 = new Panel();
             btnMuteChans = new Button();
+            btnEditPersonalInfo = new Button();
             tbxX32IP = new TextBox();
             lblX32 = new Label();
             btnSaveSettings = new Button();
@@ -233,6 +234,7 @@
             // 
             panel3.BorderStyle = BorderStyle.FixedSingle;
             panel3.Controls.Add(btnMuteChans);
+            panel3.Controls.Add(btnEditPersonalInfo);
             panel3.Controls.Add(tbxX32IP);
             panel3.Controls.Add(lblX32);
             panel3.Controls.Add(btnSaveSettings);
@@ -253,7 +255,17 @@
             btnMuteChans.Text = "Setup Mute Group";
             btnMuteChans.UseVisualStyleBackColor = true;
             btnMuteChans.Click += btnMuteChans_Click;
-            // 
+            //
+            // btnEditPersonalInfo
+            //
+            btnEditPersonalInfo.Location = new Point(14, 170);
+            btnEditPersonalInfo.Name = "btnEditPersonalInfo";
+            btnEditPersonalInfo.Size = new Size(271, 49);
+            btnEditPersonalInfo.TabIndex = 9;
+            btnEditPersonalInfo.Text = "Edit Personal Info";
+            btnEditPersonalInfo.UseVisualStyleBackColor = true;
+            btnEditPersonalInfo.Click += btnEditPersonalInfo_Click;
+            //
             // tbxX32IP
             // 
             tbxX32IP.Location = new Point(128, 124);
@@ -520,5 +532,6 @@
         private Button btn6;
         private NotifyIcon notifyIcon;
         private Button btnMuteChans;
+        private Button btnEditPersonalInfo;
     }
 }

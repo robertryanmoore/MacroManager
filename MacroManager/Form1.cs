@@ -166,7 +166,7 @@ namespace MacroManager
                 //load songs.json
                 try
                 {
-                    string json = File.ReadAllText("songs.json");
+                    string json = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "songs.json"));
                     _songs = JsonSerializer.Deserialize<List<Song>>(json);
 
                     DisplaySong();
@@ -282,7 +282,7 @@ namespace MacroManager
                     btn6.Text = "Phone W";
                     btn7.Text = "Open 11Share";
                     btn8.Text = "Beta/redesign";
-                    btn9.Text = "unbound";
+                    btn9.Text = "Change DB";
                     btn10.Text = "unbound";
                 }
 
@@ -378,17 +378,16 @@ namespace MacroManager
                     break;
                 case F15:
                     //MessageBox.Show("F15 Lasers!");
-                    //make the url configurable later
-                    FireAndForgetGet("http://laserleft.local/toggle");
-                    FireAndForgetGet("http://laserright.local/toggle");
+                    FireAndForgetGet(Properties.Settings.Default.LaserLeftUrl);
+                    FireAndForgetGet(Properties.Settings.Default.LaserRightUrl);
                     break;
                 case F16:
                     //MessageBox.Show("F16 Left Laser!");
-                    FireAndForgetGet("http://laserleft.local/toggle");
+                    FireAndForgetGet(Properties.Settings.Default.LaserLeftUrl);
                     break;
                 case F17:
                     //MessageBox.Show("F17 Right Laser!");
-                    FireAndForgetGet("http://laserright.local/toggle");
+                    FireAndForgetGet(Properties.Settings.Default.LaserRightUrl);
                     break;
                 case F18:
                     MessageBox.Show("F18 was pressed!");
@@ -460,19 +459,19 @@ namespace MacroManager
                     PressMediaPlayPause();
                     break;
                 case F15:
-                    SendKeys.Send("moore.robert.ryan@gmail.com");
+                    SendKeys.Send(Properties.Settings.Default.EmailPersonal);
                     break;
                 case F16:
-                    SendKeys.Send("0768514138");
+                    SendKeys.Send(Properties.Settings.Default.PhonePersonal);
                     break;
                 case F17:
-                    SendKeys.Send("9711265125081");
+                    SendKeys.Send(Properties.Settings.Default.IdNumber);
                     break;
                 case F18:
-                    SendKeys.Send("robert@robertryanmoore.co.za");
+                    SendKeys.Send(Properties.Settings.Default.EmailHome);
                     break;
                 case F19:
-                    SendKeys.Send("0691892576");
+                    SendKeys.Send(Properties.Settings.Default.PhoneWork);
                     break;
                 case F20:
                     MessageBox.Show("F20 was pressed!");
@@ -497,13 +496,17 @@ namespace MacroManager
                     MessageBox.Show("F14 was pressed!");
                     break;
                 case F15:
-                    MessageBox.Show("F15 was pressed!");
+                    //MessageBox.Show("F15 Lasers!");
+                    FireAndForgetGet(Properties.Settings.Default.LaserLeftUrl);
+                    FireAndForgetGet(Properties.Settings.Default.LaserRightUrl);
                     break;
                 case F16:
-                    MessageBox.Show("F16 was pressed!");
+                    //MessageBox.Show("F16 Left Laser!");
+                    FireAndForgetGet(Properties.Settings.Default.LaserLeftUrl);
                     break;
                 case F17:
-                    MessageBox.Show("F17 was pressed!");
+                    //MessageBox.Show("F17 Right Laser!");
+                    FireAndForgetGet(Properties.Settings.Default.LaserRightUrl);
                     break;
                 case F18:
                     MessageBox.Show("F18 was pressed!");
@@ -536,35 +539,44 @@ namespace MacroManager
                     PressMediaPlayPause();
                     break;
                 case F15:
-                    SendKeys.Send("moore.robert.ryan@gmail.com");
+                    SendKeys.Send(Properties.Settings.Default.EmailPersonal);
                     break;
                 case F16:
-                    SendKeys.Send("0768514138");
+                    SendKeys.Send(Properties.Settings.Default.PhonePersonal);
                     break;
                 case F17:
-                    SendKeys.Send("9711265125081");
+                    SendKeys.Send(Properties.Settings.Default.IdNumber);
                     break;
                 case F18:
-                    SendKeys.Send("robertmoore@winems.co.za");
+                    SendKeys.Send(Properties.Settings.Default.EmailWork);
                     break;
                 case F19:
-                    SendKeys.Send("0691892576");
+                    SendKeys.Send(Properties.Settings.Default.PhoneWork);
                     break;
                 case F20:
-                   
-                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+
+                    if (Properties.Settings.Default.BackupSharePath != null && !string.IsNullOrEmpty(Properties.Settings.Default.BackupSharePath))
                     {
-                        FileName = "\\\\10.170.15.6\\XNeelo Backup\\",
-                        UseShellExecute = true,
-                        Verb = "open"
-                    });
+
+                        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+                        {
+                            FileName = Properties.Settings.Default.BackupSharePath,
+                            UseShellExecute = true,
+                            Verb = "open"
+                        });
+                    }
+                    else
+                    {
+                        MessageBox.Show("Backup share path is not set in settings.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
 
                     break;
                 case F21:
                     SendKeys.Send("git checkout beta/redesign {Enter}");
                     break;
                 case F22:
-                    MessageBox.Show("F21 was pressed!");
+                    DbSelector dbs = new DbSelector();
+                    dbs.ShowDialog();
                     break;
                 case F23:
                     MessageBox.Show("F22 was pressed!");
@@ -700,6 +712,14 @@ namespace MacroManager
         private void btn10_Click(object sender, EventArgs e)
         {
             KeyboardHook_KeyPressed(this, F23);
+        }
+
+        private void btnEditPersonalInfo_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new PersonalInfoDialog())
+            {
+                dialog.ShowDialog();
+            }
         }
 
         private void btnMuteChans_Click(object sender, EventArgs e)

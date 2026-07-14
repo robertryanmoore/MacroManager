@@ -58,5 +58,113 @@ namespace MacroManager.Properties {
                 this["X32PW"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string EmailPersonal {
+            get {
+                return ((string)(this["EmailPersonal"]));
+            }
+            set {
+                this["EmailPersonal"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PhonePersonal {
+            get {
+                return ((string)(this["PhonePersonal"]));
+            }
+            set {
+                this["PhonePersonal"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string IdNumber {
+            get {
+                return ((string)(this["IdNumber"]));
+            }
+            set {
+                this["IdNumber"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string EmailHome {
+            get {
+                return ((string)(this["EmailHome"]));
+            }
+            set {
+                this["EmailHome"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string EmailWork {
+            get {
+                return ((string)(this["EmailWork"]));
+            }
+            set {
+                this["EmailWork"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PhoneWork {
+            get {
+                return ((string)(this["PhoneWork"]));
+            }
+            set {
+                this["PhoneWork"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LaserLeftUrl {
+            get {
+                return ((string)(this["LaserLeftUrl"]));
+            }
+            set {
+                this["LaserLeftUrl"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LaserRightUrl {
+            get {
+                return ((string)(this["LaserRightUrl"]));
+            }
+            set {
+                this["LaserRightUrl"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string BackupSharePath {
+            get {
+                return ((string)(this["BackupSharePath"]));
+            }
+            set {
+                this["BackupSharePath"] = value;
+            }
+        }
     }
 }
